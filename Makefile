@@ -16,20 +16,25 @@ OBJ= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 DEP= ${OBJ:.o=.d}
 
 # Default rule: just ask for bin main
-all: $(BIN)
+all: $(OBJDIR)/$(BIN)
 
 # main depends on object files, that's all we need
-$(BIN): ${OBJ}
+$(OBJDIR)/$(BIN): ${OBJ}
 
-${OBJ} : $(SRC)
+${OBJ}: ${SRC}
 	mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -c $< -o $@ $(LDLIBS)
 
 # cleaning rule
 clean:
-	${RM} ${OBJ} ${DEP} $(BIN)
+	${RM} ${OBJ} ${DEP} $(OBJDIR)/$(BIN)
 
 # includes deps
 -include ${DEP}
+
+run:
+	./$(OBJDIR)/$(BIN) $(filter-out $@,$(MAKECMDGOALS))
+%:
+	@:
 
 # END of Makefile
