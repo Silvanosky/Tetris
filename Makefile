@@ -2,24 +2,32 @@
  
 # Vars
 CC= gcc
-CPPFLAGS= -MMD                    
+CPPFLAGS= -MMD `pkg-config --cflags sdl`
 CFLAGS= -Wall -Wextra -std=c99 -O2 
 LDFLAGS=                           
-LDLIBS=                           
+LDLIBS= -export-dynamic -lSDL_image -lm                          
 
-SRC= $(wildcard src/*.c)
-OBJ= $(patsubst src/%.c, bin/%.o, $(SRC))                  
-DEP= ${OBJ:.o=.d}                  
+BIN = main
+SRCDIR= src
+OBJDIR= bin
+
+SRC= $(wildcard $(SRCDIR)/*.c)
+OBJ= $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+DEP= ${OBJ:.o=.d}
 
 # Default rule: just ask for bin main
-all: main
+all: $(BIN)
 
 # main depends on object files, that's all we need
-main: ${OBJ}
+$(BIN): ${OBJ}
+
+${OBJ} : $(SRC)
+	mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -c $< -o $@ $(LDLIBS)
 
 # cleaning rule
 clean:
-	${RM} ${OBJ} ${DEP} main
+	${RM} ${OBJ} ${DEP} $(BIN)
 
 # includes deps
 -include ${DEP}
