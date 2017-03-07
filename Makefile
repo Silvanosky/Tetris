@@ -5,7 +5,7 @@ CC= gcc
 CPPFLAGS= -MMD `pkg-config --cflags sdl`
 CFLAGS= -Wall -Wextra -std=c99 -O2 
 LDFLAGS=                           
-LDLIBS= -export-dynamic -lSDL_image -lm                          
+LDLIBS= `pkg-config --libs sdl` -export-dynamic -lSDL_ttf -lSDL_image -lm
 
 BIN = main
 SRCDIR= src
@@ -19,20 +19,19 @@ DEP= ${OBJ:.o=.d}
 all: $(OBJDIR)/$(BIN)
 
 # main depends on object files, that's all we need
-$(OBJDIR)/$(BIN): ${OBJ}
+$(OBJDIR)/$(BIN): $(OBJ)
 	mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $^ -o $@ $(LDLIBS)
 
-${OBJ}: ${SRC}
+-include $(DEP)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -c $< -o $@ $(LDLIBS)
 
 # cleaning rule
 clean:
 	${RM} ${OBJ} ${DEP} $(OBJDIR)/$(BIN)
-
-# includes deps
--include ${DEP}
 
 run:
 	./$(OBJDIR)/$(BIN) $(filter-out $@,$(MAKECMDGOALS))
