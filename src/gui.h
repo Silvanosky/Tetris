@@ -1,4 +1,4 @@
-# ifndef GUI_H
+# ifndef GUI_H_
 # define GUI_H_
 
 # include <stdio.h>
