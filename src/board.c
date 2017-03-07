@@ -51,11 +51,17 @@ int isLineFull(board* board, size_t y)
 
 void removeLine(board* board, size_t y)
 {
-	for(size_t y = y; y >= 0; y--)
+	for(size_t y = y; y > 0; y--)
 	{
 		for(size_t x = board->w; x >= 0; x--)
 		{
-			
+			board->board_[y * board->w + x] = 
+				board->board_[(y-1) * board->w + x];
 		}
+	}
+
+	for(size_t x = 0; x < board->w; x++)
+	{
+		board->baord_[x] = 0;
 	}
 }
