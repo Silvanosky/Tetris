@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-# include "gui.h"
+# include "menu.h"
+
 
 int main()
 {
 	printf("Hello World!\n");
-	test();
+	createMenu();
 	return 0;
 }
