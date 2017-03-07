@@ -20,6 +20,8 @@ all: $(OBJDIR)/$(BIN)
 
 # main depends on object files, that's all we need
 $(OBJDIR)/$(BIN): ${OBJ}
+	mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $^ -o $@ $(LDLIBS)
 
 ${OBJ}: ${SRC}
 	mkdir -p $(@D)
