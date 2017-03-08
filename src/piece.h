@@ -1,15 +1,18 @@
 #ifndef FILE_HEADER_PIECE
 #define FILE_HEADER_PIECE
 
-typedef struct s_shape{
+#include <stdlib.h>
+#include "board.h"
+
+typedef struct shape {
 
 	size_t h;
 	size_t w;
-	char* form;
+	int* form;
 
 } shape;
 
-typedef struct s_piece{
+struct piece {
 
 	size_t x;
 	size_t y;
@@ -17,8 +20,12 @@ typedef struct s_piece{
 	size_t c_i;
 
 	size_t n;
-	shape* shapes_;	
+	shape* shapes_;
 
-} piece;
+};
+
+typedef struct piece piece;
+
+int checkPosition(board *board_, piece *piece_);
 
 #endif
