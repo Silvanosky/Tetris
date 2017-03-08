@@ -1,6 +1,6 @@
 # include "gui.h"
 
-void init_SDL(void)
+void init_SDL()
 {
   // Init only the video part
   if( SDL_Init(SDL_INIT_VIDEO)==-1 )
@@ -9,6 +9,16 @@ void init_SDL(void)
     errx(1,"Could not initialize SDL: %s.\n", SDL_GetError());
   }
   // We don't really need a function for that ...
+}
+
+void init_TTF()
+{
+  if(TTF_Init() == -1)
+    {
+      fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n",
+      TTF_GetError());
+      exit(EXIT_FAILURE);
+    }
 }
 
 void wait_for_keypressed(void)
@@ -27,6 +37,17 @@ void wait_for_keypressed(void)
     }
   // Loop until we got the expected event
   }
+}
+
+SDL_Surface* load_image(char *path)
+{
+  SDL_Surface          *img;
+  // Load an image using SDL_image with format detection
+  img = IMG_Load(path);
+  if (!img)
+    // If it fails, die with an error message
+    errx(3, "can't load %s: %s", path, IMG_GetError());
+  return img;
 }
 
 SDL_Surface* initWindow(size_t x, size_t y)
