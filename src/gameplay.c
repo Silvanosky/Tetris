@@ -75,6 +75,9 @@ void play(SDL_Surface* screen)
 			if(!checkPosition(board, p))
 			{
 				fixPosition(board, p);
+
+				//TODO check line
+				//TODO new piece
 			}
 			lastTime = time(NULL);
 		}	

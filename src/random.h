@@ -3,10 +3,12 @@
 
 #include <stdlib.h>
 
-int* generateRandom();
+int* generateRandom(int size, int cache);
 
 void swap(int* tab, int a, int b);
 
 void shuffle(int* tab);
+
+int getRandom();
 
 #endif 

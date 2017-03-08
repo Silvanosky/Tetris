@@ -130,8 +130,8 @@ shape** getShape(size_t id, size_t* n)
 	static shape*** data = NULL;
 	if(!data)
 	{
-		data = malloc(2 * sizeof(shape**));
-		int i = 1, j = 0;
+		data = malloc(1 * sizeof(shape**));
+		int i = 0, j = 0;
 		data[i] = malloc(2 * sizeof(shape*));
 		int a[] = {1, 1, 1, 1};
 		createShape(data[i][j++], 1, 4, a);
