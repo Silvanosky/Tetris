@@ -68,7 +68,7 @@ void removeLine(board* board, size_t ly)
 
 int checkPosition(board *board_, piece *piece) 
 {
-	shape* shape_ = piece->shapes_[0];
+	shape* shape_ = piece->shapes_[piece->c_i];
 	for (size_t y = 0; y < shape_->h; y++) 
 	{
 		for (size_t x = 0; x < shape_->w; x++) 

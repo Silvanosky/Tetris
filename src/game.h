@@ -7,7 +7,7 @@ typedef struct shape {
 
 	size_t h;
 	size_t w;
-	int* form;
+	int[] form;
 
 } shape;
 
