@@ -51,8 +51,14 @@ void removeLine(board* board_, size_t y);
 
 //PIECE
 
+piece* init_piece(size_t id, size_t x, size_t y);
+
 int checkPosition(board *board_, piece *piece_);
 
+int fixPosition(board *board_, piece *piece_);
 
+//SHAPE SAVE
+
+shape** getShape(size_t id, size_t* n);
 
 #endif

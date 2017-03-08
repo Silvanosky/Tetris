@@ -66,6 +66,18 @@ void removeLine(board* board, size_t ly)
 	}
 }
 
+piece* init_piece(size_t id, size_t x, size_t y)
+{
+	piece* p = malloc(1 * sizeof(piece));
+	p->x = x;
+	p->y = y;
+	p->c_i = 0;
+
+	p->shapes_ = getShape(id, &(p->n));
+
+	return p;
+}
+
 int checkPosition(board *board_, piece *piece) 
 {
 	shape* shape_ = piece->shapes_[piece->c_i];
@@ -83,4 +95,49 @@ int checkPosition(board *board_, piece *piece)
 		}
 	}
 	return 1;
+}
+
+int fixPosition(board *board, piece *piece)
+{
+	shape* shape_ = piece->shapes_[piece->c_i];
+	for (size_t y = 0; y < shape_->h; y++) 
+	{
+		for (size_t x = 0; x < shape_->w; x++) 
+		{
+			if (shape_->form[y * shape_->w + x])
+				board->board_[
+					(y + piece->y) * board->w + (x + piece->x)
+				] = piece->c_i + 1;	
+		}
+	}
+
+	return 0;
+}
+
+void createShape(shape* shape, size_t w, size_t h, int data[])
+{
+	shape->w = w;
+	shape->h = h;
+	shape->form = malloc(w*h * sizeof(int));
+	for(size_t i = 0; i < w*h; i++)
+	{
+		shape->form[i] = data[i];
+	}
+}
+
+shape** getShape(size_t id, size_t* n)
+{
+	static shape*** data = NULL;
+	if(!data)
+	{
+		data = malloc(2 * sizeof(shape**));
+		int i = 1, j = 0;
+		data[i] = malloc(2 * sizeof(shape*));
+		int a[] = {1, 1, 1, 1};
+		createShape(data[i][j++], 1, 4, a);
+		createShape(data[i++][j++], 4, 1, a);
+	}
+	*n = 2;
+
+	return data[id];
 }
