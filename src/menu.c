@@ -60,6 +60,10 @@ void eventManager(SDL_Surface *screen)
               case SDLK_SPACE: // key_space : launch the recognition
                 Proceed = 0;
                 createWindow(screen);
+				int* board = malloc(200 * sizeof(int));
+				for(int i = 0; i < 200; i++)
+					board[i] = i%2;
+				displayBoard(screen, board);
                 break;
               case SDLK_q:
               Proceed = 0;
