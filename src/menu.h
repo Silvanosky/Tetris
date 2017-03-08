@@ -5,7 +5,7 @@
 
 TTF_Font* load_font(char *path, size_t size); //"../bin/font/font.ttf"
 
-void createMenu();
+SDL_Surface* createMenu();
 
 void eventManager();
 
