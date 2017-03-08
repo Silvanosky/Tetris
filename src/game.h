@@ -13,6 +13,8 @@ typedef struct shape {
 
 typedef struct piece {
 
+	size_t id;
+
 	size_t x;
 	size_t y;
 
@@ -51,7 +53,7 @@ void removeLine(board* board_, size_t y);
 
 //PIECE
 
-piece* init_piece(size_t id, size_t x, size_t y);
+piece* init_piece(size_t id, size_t x);
 
 int checkPosition(board *board_, piece *piece_);
 

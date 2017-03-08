@@ -66,15 +66,16 @@ void removeLine(board* board, size_t ly)
 	}
 }
 
-piece* init_piece(size_t id, size_t x, size_t y)
+piece* init_piece(size_t id, size_t x)
 {
 	piece* p = malloc(1 * sizeof(piece));
-	p->x = x;
-	p->y = y;
+
+	p->id = id;
 	p->c_i = 0;
 
 	p->shapes_ = getShape(id, &(p->n));
-
+	p->x = x;
+	p->y = p->shapes_[0]->h;
 	return p;
 }
 

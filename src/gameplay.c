@@ -1,6 +1,6 @@
 #include "gameplay.h"
 
-void handleInput(int* Proceed, int* x, int* y)
+void handleInput(int* Proceed, int* x, int* y, int* r)
 {
 	SDL_Event event;
 	// Take an event
@@ -16,7 +16,7 @@ void handleInput(int* Proceed, int* x, int* y)
 			switch (event.key.keysym.sym)
 			{
 			  	case SDLK_SPACE: // key_space : launch the recognition
-					//Rotation
+					*r += 1;
 					break;
 				case SDLK_UP:
 					//TODO down bottom
@@ -40,48 +40,79 @@ void handleInput(int* Proceed, int* x, int* y)
 	}
 }
 
+void handleMovement(board* board, piece* p, int dx, int dy, int dr)
+{
+	p->c_i += dr;
+	if(!checkPosition(board, p))
+	{
+		p->c_i -= dr;
+		return;//Can't rotate so return;
+	}
+
+	p->x += dx;
+	p->y += dy;
+	
+	if(!checkPosition(board, p))
+	{
+		p->x -= dx;
+		p->y -= dy;
+		return;
+	}	
+}
+
+void checkGravity(board* b, piece* p)
+{
+	static time_t lastTime = -1;
+	if(lastTime == -1)
+		lastTime = time(NULL);
+
+	shape* shape = p->shapes_[p->c_i];
+	
+	double sec = difftime(time(NULL), lastTime);
+	if(sec > 1.5)
+	{
+		p->y += 1;
+
+		if(!checkPosition(b, p))
+		{
+			fixPosition(b, p);
+
+			size_t nline = 0;
+			for(size_t y = p->y; y < p->y + shape->w; y++)
+			{	
+				if(isLineFull(b, y))
+				{
+					nline++;
+					removeLine(b, y);//TODO opti remove
+				}
+			}
+
+			free(p);
+			b->piece_ = init_piece(getRandom(), 5);
+		}
+		lastTime = time(NULL);
+	}
+}
+
 void play(SDL_Surface* screen)
 {
-	time_t lastTime = time(NULL);
-
 	board* board = init_board(22, 10, 0);
-	//board->piece_ = TODO
+	board->piece_ = init_piece(getRandom(), 5);//TODO dynamic x
 
 	int Proceed = 1;
 	createWindow(screen);
 	while(Proceed)
 	{
-		int dx = 0;
-		int dy = 0;
-		
-		handleInput(&Proceed, &dx, &dy);
-		
+		int dx = 0, dy = 0, dr = 0; 
+
+		handleInput(&Proceed, &dx, &dy, &dr);
+
 		piece* p = board->piece_;
-		p->x += dx;
-		p->y += dy;
 
-		if(!checkPosition(board, p))
-		{
-			p->x -= dx;
-			p->y -= dy;
-		}
+		handleMovement(board, p, dx, dy, dr);
+	
+		checkGravity(board, p);
 
-		//Process
-		double sec = difftime(time(NULL), lastTime);
-		if(sec > 1.5)
-		{
-			p->y += 1;
-
-			if(!checkPosition(board, p))
-			{
-				fixPosition(board, p);
-
-				//TODO check line
-				//TODO new piece
-			}
-			lastTime = time(NULL);
-		}	
-		
 		displayBoard(screen, board->board_);//TODO show piece
 	}
 }

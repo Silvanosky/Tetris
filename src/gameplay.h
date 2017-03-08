@@ -5,5 +5,6 @@
 #include "game.h"
 #include "gui.h"
 #include "gameUI.h"
+#include "random.h"
 
 #endif
