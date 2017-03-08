@@ -56,12 +56,14 @@ SDL_Surface* initWindow(size_t x, size_t y)
   SDL_Rect _screen;
   _screen.x = _screen.y = 0;
   //Init the window and display plain color
+  SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
   screen = SDL_SetVideoMode(x, y, 0,
     SDL_HWSURFACE|SDL_ANYFORMAT|SDL_DOUBLEBUF); //1368, 768
+  SDL_WM_SetCaption ("Tetris", NULL);
   SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
   SDL_Flip(screen);
   return screen;
-  //SDL_FreeSurface(screen);
+  //Titre fenetr//SDL_FreeSurface(screen);
 }
 
 void test()
