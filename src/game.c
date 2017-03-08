@@ -20,7 +20,7 @@ board* init_board(size_t h, size_t w, size_t lvl)
 void free_board(board* board)
 {
 	free(board->board_);
-	free_piece(board->piece_);
+	free(board->piece_);
 	free(board);
 }
 
