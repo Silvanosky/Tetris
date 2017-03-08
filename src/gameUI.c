@@ -63,4 +63,5 @@ SDL_Surface* displayBoard(SDL_Surface *screen, int *board)
     }
     _board.y += 25;
   }
+  return screen;
 }
