@@ -2,11 +2,13 @@
 #include <stdio.h>
 
 # include "menu.h"
+# include "gameUI.h"
 
 
 int main()
 {
-	createMenu();
-	eventManager();
+	SDL_Surface *screen = NULL;
+	screen = createMenu();
+	eventManager(screen);
 	return 0;
 }
