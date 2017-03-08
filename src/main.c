@@ -6,7 +6,7 @@
 
 int main()
 {
-	printf("Hello World!\n");
 	createMenu();
+	eventManager();
 	return 0;
 }

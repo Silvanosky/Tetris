@@ -31,5 +31,41 @@ void createMenu()
   toBlit = TTF_RenderText_Blended(font, "QUIT", white_color);
   SDL_BlitSurface(toBlit, NULL, screen, &_quit );
   SDL_Flip(screen);
-  wait_for_keypressed();
+  SDL_FreeSurface(screen);
+  SDL_FreeSurface(toBlit);
+  SDL_FreeSurface(logo);
+  SDL_FreeSurface(background);
+}
+
+void eventManager()
+{
+  int Proceed = 1;
+  SDL_Event             event;
+  while(Proceed)
+  {
+    // Take an event
+    SDL_WaitEvent(&event);
+    // Switch on event type
+    switch (event.type)
+    {
+      // Someone pressed a key -> leave the function
+      case SDL_QUIT: /* Quit */
+            Proceed = 0;
+            break;
+      case SDL_KEYDOWN: /* Si appui sur une touche */
+            switch (event.key.keysym.sym)
+            {
+              case SDLK_RETURN: // key_return : launch the recognition
+              case SDLK_SPACE: // key_space : launch the recognition
+                Proceed = 0;
+                break;
+              case SDLK_q:
+              Proceed = 0;
+              break;
+              default: break;
+            }
+            break;
+      default: break;
+    }
+  }
 }

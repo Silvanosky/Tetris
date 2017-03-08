@@ -7,4 +7,6 @@ TTF_Font* load_font(char *path, size_t size); //"../bin/font/font.ttf"
 
 void createMenu();
 
+void eventManager();
+
 # endif /* MENU_H_ */
