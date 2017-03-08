@@ -1,8 +1,27 @@
-#ifndef FILE_HEADER_BOARD
-#define FILE_HEADER_BOARD
+#ifndef FILE_HEADER_GAME
+#define FILE_HEADER_GAME
 
 #include <stdlib.h>
-#include "piece.h"
+
+typedef struct shape {
+
+	size_t h;
+	size_t w;
+	int* form;
+
+} shape;
+
+typedef struct piece {
+
+	size_t x;
+	size_t y;
+
+	size_t c_i;
+
+	size_t n;
+	shape** shapes_;
+
+} piece;
 
 typedef struct board{
 	size_t h;
@@ -16,8 +35,10 @@ typedef struct board{
 
 	piece* piece_;
 
-};
+} board;
 
+
+//BOARD
 board* init_board(size_t h, size_t w, size_t lvl);
 
 void free_board(board* board_);
@@ -27,5 +48,11 @@ int loose(board* board_, piece* piece);
 int isLineFull(board* board_, size_t y);
 
 void removeLine(board* board_, size_t y);
+
+//PIECE
+
+int checkPosition(board *board_, piece *piece_);
+
+
 
 #endif
