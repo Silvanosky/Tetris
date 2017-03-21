@@ -1,6 +1,6 @@
 #include "gameplay.h"
 
-void handleInput(int* Proceed, int* x, int* y, int* r)
+void handleInput(int* proceed, int* x, int* y, int* r)
 {
 	SDL_Event event;
 	// Take an event
@@ -10,7 +10,7 @@ void handleInput(int* Proceed, int* x, int* y, int* r)
 	{
 	  	// Someone pressed a key -> leave the function
 	  	case SDL_QUIT: /* Quit */
-			*Proceed = 0;
+			*proceed = 0;
 			break;
 	  	case SDL_KEYDOWN: /* Si appui sur une touche */
 			switch (event.key.keysym.sym)
@@ -31,7 +31,7 @@ void handleInput(int* Proceed, int* x, int* y, int* r)
 					*x -= 1;
 					break;
 			  	case SDLK_ESCAPE:
-			  		*Proceed = 0;
+			  		*proceed = 0;
 			  		break;
 			  	default: break;
 			}
@@ -99,9 +99,9 @@ void play(SDL_Surface* screen)
 	board* board = init_board(22, 10, 0);
 	board->piece_ = init_piece(getRandom(), 5);//TODO dynamic x
 
-	int Proceed = 1;
+	int proceed = 1;
 	createWindow(screen);
-	while(Proceed)
+	while(proceed)
 	{
 		int dx = 0, dy = 0, dr = 0; 
 
