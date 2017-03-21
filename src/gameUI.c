@@ -63,7 +63,7 @@ SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
     _board.y = 20;
     for (size_t j = 2; j < 22; j++)
     {
-      if (board[j * 10 + i])
+      if (board->board_[j * 10 + i])
       {
         toBlit = load_image("bin/sprites/cyan.bmp");
       }
@@ -83,8 +83,7 @@ SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
 SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
 {
 	SDL_Surface* game = SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
-	SDL_FillRect(game, Null, SDL_MapRGB(screen->format, 0, 0, 0));
-
+  SDL_FillRect(game, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 }
 
 SDL_Surface* drawPiece(SDL_Surface *screen, piece* p)

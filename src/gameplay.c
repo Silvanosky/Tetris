@@ -1,4 +1,5 @@
 #include "gameplay.h"
+#include "score.h"
 
 void handleInput(int* proceed, int* x, int* y, int* r)
 {
@@ -40,8 +41,13 @@ void handleInput(int* proceed, int* x, int* y, int* r)
 	}
 }
 
-void handleMovement(board* board, piece* p, int dx, int dy, int dr)
+void handleMovement(board* board, piece* p, int* currentScore,
+ int dx, int dy, int dr)
 {
+	if (dy == 1)
+		softDrop(currentScore);
+	else 
+		hardDrop(currentScore, dy); 
 	p->c_i += dr;
 	if(!checkPosition(board, p))
 	{
@@ -99,6 +105,7 @@ void play(SDL_Surface* screen)
 {
 	board* board = init_board(22, 10, 0);
 	board->piece_ = init_piece(getRandom(), 5);//TODO dynamic x
+	int *currentScore = 0;
 
 	int proceed = 1;
 	createWindow(screen);
@@ -110,10 +117,10 @@ void play(SDL_Surface* screen)
 
 		piece* p = board->piece_;
 
-		handleMovement(board, p, dx, dy, dr);
+		handleMovement(board, p, currentScore,  dx, dy, dr);
 	
 		checkGravity(board, p);
 
-		displayBoard(screen, board->board_);//TODO show piece
+		displayBoard(screen, board);//TODO show piece
 	}
 }
