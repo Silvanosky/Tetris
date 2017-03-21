@@ -1,5 +1,4 @@
 #include "gameplay.h"
-#include "score.h"
 
 void handleInput(int* proceed, int* x, int* y, int* r)
 {
