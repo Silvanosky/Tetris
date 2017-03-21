@@ -75,6 +75,7 @@ void checkGravity(board* b, piece* p)
 
 		if(!checkPosition(b, p))
 		{
+			p->y -= 1;
 			fixPosition(b, p);
 
 			size_t nline = 0;
@@ -105,7 +106,7 @@ void play(SDL_Surface* screen)
 	{
 		int dx = 0, dy = 0, dr = 0; 
 
-		handleInput(&Proceed, &dx, &dy, &dr);
+		handleInput(&proceed, &dx, &dy, &dr);
 
 		piece* p = board->piece_;
 
