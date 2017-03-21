@@ -66,7 +66,7 @@ void handleMovement(board* board, piece* p, int* currentScore,
 	}	
 }
 
-void checkGravity(board* b, piece* p)
+void checkGravity(board* b, piece* p, int* currentScore)
 {
 	static time_t lastTime = -1;
 	if(lastTime == -1)
@@ -84,16 +84,16 @@ void checkGravity(board* b, piece* p)
 			p->y -= 1;
 			fixPosition(b, p);
 
-			size_t nline = 0;
+			size_t nbLine = 0;
 			for(size_t y = p->y; y < p->y + shape->w; y++)
 			{	
 				if(isLineFull(b, y))
 				{
-					nline++;
+					nbLine++;
 					removeLine(b, y);//TODO opti remove
 				}
 			}
-
+			computeScore(currentScore, nbLine, b->lvl);
 			free(p);
 			b->piece_ = init_piece(getRandom(), 5);
 		}
@@ -119,8 +119,8 @@ void play(SDL_Surface* screen)
 
 		handleMovement(board, p, currentScore,  dx, dy, dr);
 	
-		checkGravity(board, p);
+		checkGravity(board, p, currentScore);
 
-		displayBoard(screen, board);//TODO show piece
+		displayBoard(screen, board->board_);//TODO show piece
 	}
 }
