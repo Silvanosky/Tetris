@@ -114,6 +114,6 @@ void play(SDL_Surface* screen)
 	
 		checkGravity(board, p);
 
-		displayBoard(screen, board->board_);//TODO show piece
+		displayBoard(screen, board);//TODO show piece
 	}
 }
