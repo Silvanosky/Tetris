@@ -1,6 +1,20 @@
 # include "gameUI.h"
 # include "menu.h"
 
+
+struct sprites* load_sprites()
+{
+  struct sprites *sp = malloc(sizeof (struct sprites));
+  sp->blue = load_image("bin/sprites/blue.bmp");
+  sp->cyan = load_image("bin/sprites/cyan.bmp");
+  sp->green = load_image("bin/sprites/green.bmp");
+  sp->yellow = load_image("bin/sprites/yellow.bmp");
+  sp->pink = load_image("bin/sprites/pink.bmp");
+  sp->red = load_image("bin/sprites/red.bmp");
+  sp->purple = load_image("bin/sprites/purple.bmp");
+  return sp;
+}
+
 SDL_Surface* createWindow(SDL_Surface *screen)
 {
   SDL_Surface /**board,*/ *toBlit = NULL;
@@ -70,11 +84,10 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
 {
 	SDL_Surface* game = SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
 	SDL_FillRect(game, Null, SDL_MapRGB(screen->format, 0, 0, 0));
-	
+
 }
 
 SDL_Surface* drawPiece(SDL_Surface *screen, piece* p)
 {
-	
-}
 
+}
