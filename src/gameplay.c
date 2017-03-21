@@ -1,7 +1,7 @@
 #include "gameplay.h"
 #include "score.h"
 
-void handleInput(int* Proceed, int* x, int* y, int* r)
+void handleInput(int* proceed, int* x, int* y, int* r)
 {
 	SDL_Event event;
 	// Take an event
@@ -11,7 +11,7 @@ void handleInput(int* Proceed, int* x, int* y, int* r)
 	{
 	  	// Someone pressed a key -> leave the function
 	  	case SDL_QUIT: /* Quit */
-			*Proceed = 0;
+			*proceed = 0;
 			break;
 	  	case SDL_KEYDOWN: /* Si appui sur une touche */
 			switch (event.key.keysym.sym)
@@ -32,7 +32,7 @@ void handleInput(int* Proceed, int* x, int* y, int* r)
 					*x -= 1;
 					break;
 			  	case SDLK_ESCAPE:
-			  		*Proceed = 0;
+			  		*proceed = 0;
 			  		break;
 			  	default: break;
 			}
@@ -81,6 +81,7 @@ void checkGravity(board* b, piece* p)
 
 		if(!checkPosition(b, p))
 		{
+			p->y -= 1;
 			fixPosition(b, p);
 
 			size_t nline = 0;
@@ -106,13 +107,13 @@ void play(SDL_Surface* screen)
 	board->piece_ = init_piece(getRandom(), 5);//TODO dynamic x
 	int *currentScore = 0;
 
-	int Proceed = 1;
+	int proceed = 1;
 	createWindow(screen);
-	while(Proceed)
+	while(proceed)
 	{
 		int dx = 0, dy = 0, dr = 0; 
 
-		handleInput(&Proceed, &dx, &dy, &dr);
+		handleInput(&proceed, &dx, &dy, &dr);
 
 		piece* p = board->piece_;
 
