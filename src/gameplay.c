@@ -81,7 +81,7 @@ void checkGravity(board* b, piece* p, int* currentScore)
 
 		if(!checkPosition(b, p))
 		{
-			p->y -= 1;
+			//p->y -= 1;
 			fixPosition(b, p);
 
 			size_t nbLine = 0;
