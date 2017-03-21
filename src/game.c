@@ -119,7 +119,7 @@ void createShape(shape* shape, size_t w, size_t h, int data[])
 {
 	shape->w = w;
 	shape->h = h;
-	shape->form = malloc(w*h * sizeof(int));
+	shape->form = malloc(w*h * sizeof (int));
 	for(size_t i = 0; i < w*h; i++)
 	{
 		shape->form[i] = data[i];
@@ -135,7 +135,9 @@ shape** getShape(size_t id, size_t* n)
 		int i = 0, j = 0;
 		data[i] = malloc(2 * sizeof(shape*));
 		int a[] = {1, 1, 1, 1};
+		data[i][j] = malloc(1 * sizeof (shape));
 		createShape(data[i][j++], 1, 4, a);
+		data[i][j] = malloc(1* sizeof (shape));
 		createShape(data[i++][j++], 4, 1, a);
 	}
 	*n = 2;
