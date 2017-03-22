@@ -75,7 +75,7 @@ piece* init_piece(size_t id, size_t x)
 
 	p->shapes_ = getShape(id, &(p->n));
 	p->x = x;
-	p->y = p->shapes_[0]->h;
+	p->y = p->shapes_[0]->h + 3;
 	return p;
 }
 
@@ -88,10 +88,12 @@ int checkPosition(board *board_, piece *piece)
 		{
 			if (piece->x + x >= board_->w || piece->x + x <= (size_t)-1)
 				return 0;
-			if (piece->y + y >= board_->h)
+			if (piece->y + y >= board_->h || piece->y + y <= (size_t)-1)
 				return 0;
+
 			if (shape_->form[y * shape_->w + x] 
-				&& board_->board_[(y + piece->y) * board_->w + (x + piece->x)])
+				&& 
+				board_->board_[(y + piece->y) * board_->w + (x + piece->x)])
 				return 0;	
 		}
 	}

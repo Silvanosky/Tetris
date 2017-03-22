@@ -160,6 +160,7 @@ SDL_Surface* displayBoard(SDL_Surface *screen, board *board, SDL_Surface **sp)
 {
   SDL_Rect _board = {355, 20, 0, 0};
   drawBoard(screen, _board, board, sp);
+  drawPiece(screen, board->piece_, sp);
   SDL_Flip(screen);
   return screen;
 }

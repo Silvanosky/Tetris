@@ -4,11 +4,7 @@ void handleInput(int* proceed, int* x, int* y, int* r)
 {
 	SDL_Event event;
 	// Take an event
-    if(!SDL_PollEvent(&event))
-	{
-		return;
-	}
-		
+	//SDL_WaitEventTimeout(&event, 50);	
 	// Switch on event type
 	switch (event.type)
 	{
@@ -79,13 +75,14 @@ void checkGravity(board* b, piece* p, int* currentScore)
 	shape* shape = p->shapes_[p->c_i];
 
 	double sec = difftime(time(NULL), lastTime);
+	printf("%lf", sec);
 	if(sec > 1.5)
 	{
-		p->y += 1;
+		printf("BADDDD");
+		p->y -= 1;
 
 		if(!checkPosition(b, p))
 		{
-			p->y -= 1;
 			printf("Fix position");
 			fixPosition(b, p);
 
@@ -100,7 +97,7 @@ void checkGravity(board* b, piece* p, int* currentScore)
 			}
 			computeScore(currentScore, nbLine, b->lvl);
 			free(p);
-			b->piece_ = init_piece(getRandom(), 5);
+			b->piece_ = init_piece(getRandom(), 1);
 		}
 		lastTime = time(NULL);
 	}
@@ -109,7 +106,7 @@ void checkGravity(board* b, piece* p, int* currentScore)
 void play(SDL_Surface* screen)
 {
 	board* board = init_board(22, 10, 0);
-	board->piece_ = init_piece(getRandom(), 5);//TODO dynamic x
+	board->piece_ = init_piece(getRandom(), 1);//TODO dynamic x
 	int *currentScore = malloc(sizeof (int));
 	*currentScore = 0;
 
@@ -121,16 +118,17 @@ void play(SDL_Surface* screen)
 	{
 		int dx = 0, dy = 0, dr = 0;
 
-		handleInput(&proceed, &dx, &dy, &dr);
+		//handleInput(&proceed, &dx, &dy, &dr);
 
-		piece* p = board->piece_;
+		//printf("%d %d %d\n", dx, dy, dr);
 
-		handleMovement(board, p, currentScore,  dx, dy, dr);
+		//handleMovement(board, p, currentScore, dx, dy, dr);
 
-		checkGravity(board, p, currentScore);
+		checkGravity(board, board->piece_, currentScore);
 
-		printf("%ld %ld/n", p->x, p->y);
+		printf("%ld %ld\n", board->piece_->x, board->piece_->y);
 	
 		displayBoard(screen, board, sp);//TODO show piece
+        usleep(200);
 	}
 }
