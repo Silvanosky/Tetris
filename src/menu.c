@@ -60,7 +60,7 @@ void eventManager(SDL_Surface *screen)
               case SDLK_SPACE: // key_space : launch the recognition
                 proceed = 0;
                 createWindow(screen);
-				play(screen);
+				        play(screen);
                 wait_for_keypressed();
                 break;
               case SDLK_q:

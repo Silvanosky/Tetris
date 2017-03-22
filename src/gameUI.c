@@ -87,11 +87,13 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
   game =  SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
   SDL_FillRect(game, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
   SDL_BlitSurface(game, NULL, screen, &_board);
+  warnx("A");
   for (size_t i = 0; i < 10; i++)
   {
     _board.y = 20;
     for (size_t j = 2; j < 22; j++)
     {
+      warnx(j * 10 + i);
       switch (board->board_[j * 10 + i]) {
         case 0:
           toBlit = load_image("bin/sprites/cyan.bmp");
