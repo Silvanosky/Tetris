@@ -78,10 +78,12 @@ SDL_Surface* createWindow(SDL_Surface *screen)
   return screen;
 }
 
-SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
+
+
+SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
 {
   SDL_Surface *game, *toBlit = NULL;
-  SDL_Rect _board = {355, 20, 0, 0};
+  //SDL_Rect _board = {355, 20, 0, 0};
   game =  SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
   SDL_FillRect(game, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
   SDL_BlitSurface(game, NULL, screen, &_board);
@@ -90,13 +92,21 @@ SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
     _board.y = 20;
     for (size_t j = 2; j < 22; j++)
     {
-      if (board->board_[j * 10 + i])
-      {
-        toBlit = load_image("bin/sprites/cyan.bmp");
-      }
-      else
-      {
-        toBlit = load_image("bin/sprites/pink.bmp");
+      switch (board->board_[j * 10 + i]) {
+        case 0:
+          toBlit = load_image("bin/sprites/cyan.bmp");
+        case 1:
+          toBlit = load_image("bin/sprites/blue.bmp");
+        case 2:
+          toBlit = load_image("bin/sprites/green.bmp");
+        case 3:
+          toBlit = load_image("bin/sprites/pink.bmp");
+        case 4:
+          toBlit = load_image("bin/sprites/purple.bmp");
+        case 5:
+          toBlit = load_image("bin/sprites/yellow.bmp");
+        case 6:
+          toBlit = load_image("bin/sprites/red.bmp");
       }
       SDL_BlitSurface(toBlit, NULL, screen, &_board);
       _board.y += 25;
@@ -107,13 +117,15 @@ SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
   return screen;
 }
 
-SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
-{
-	SDL_Surface* game = SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
-  SDL_FillRect(game, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
-}
-
 SDL_Surface* drawPiece(SDL_Surface *screen, piece* p)
 {
 
+}
+
+SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
+{
+  SDL_Rect _board = {355, 20, 0, 0};
+  drawBoard(screen, _board, board);
+  SDL_Flip(screen);
+  return screen;
 }
