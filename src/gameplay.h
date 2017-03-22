@@ -6,6 +6,7 @@
 #include "gui.h"
 #include "gameUI.h"
 #include "random.h"
+#include "score.h"
 
 void play(SDL_Surface* screen);
 

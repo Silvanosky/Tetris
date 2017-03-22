@@ -40,9 +40,9 @@ SDL_Surface* createMenu()
 
 void eventManager(SDL_Surface *screen)
 {
-  int Proceed = 1;
+  int proceed = 1;
   SDL_Event             event;
-  while(Proceed)
+  while(proceed)
   {
     // Take an event
     SDL_WaitEvent(&event);
@@ -51,23 +51,20 @@ void eventManager(SDL_Surface *screen)
     {
       // Someone pressed a key -> leave the function
       case SDL_QUIT: /* Quit */
-            Proceed = 0;
+            proceed = 0;
             break;
       case SDL_KEYDOWN: /* Si appui sur une touche */
             switch (event.key.keysym.sym)
             {
               case SDLK_RETURN: // key_return : launch the recognition
               case SDLK_SPACE: // key_space : launch the recognition
-                Proceed = 0;
+                proceed = 0;
                 createWindow(screen);
-				        int* board = malloc(200 * sizeof(int));
-				        for(int i = 0; i < 200; i++)
-					           board[i] = i%2;
-				        displayBoard(screen, board);
+				play(screen);
                 wait_for_keypressed();
                 break;
               case SDLK_q:
-              Proceed = 0;
+              proceed = 0;
               break;
               default: break;
             }
