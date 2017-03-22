@@ -2,16 +2,16 @@
 # include "menu.h"
 
 
-struct sprites* load_sprites()
+SDL_Surface** load_sprites()
 {
-  struct sprites *sp = malloc(sizeof (struct sprites));
-  sp->tab[0] = load_image("bin/sprites/blue.bmp");
-  sp->tab[1] = load_image("bin/sprites/cyan.bmp");
-  sp->tab[2] = load_image("bin/sprites/green.bmp");
-  sp->tab[3] = load_image("bin/sprites/yellow.bmp");
-  sp->tab[4] = load_image("bin/sprites/pink.bmp");
-  sp->tab[5] = load_image("bin/sprites/red.bmp");
-  sp->tab[6] = load_image("bin/sprites/purple.bmp");
+  SDL_Surface **sp = malloc( 7 * sizeof(SDL_Surface*));
+  sp[0] = load_image("bin/sprites/blue.bmp");
+  sp[1] = load_image("bin/sprites/cyan.bmp");
+  sp[2] = load_image("bin/sprites/green.bmp");
+  sp[3] = load_image("bin/sprites/yellow.bmp");
+  sp[4] = load_image("bin/sprites/pink.bmp");
+  sp[5] = load_image("bin/sprites/red.bmp");
+  sp[6] = load_image("bin/sprites/purple.bmp");
   return sp;
 }
 
@@ -80,7 +80,7 @@ SDL_Surface* createWindow(SDL_Surface *screen)
 
 
 
-SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
+SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board, SDL_Surface **sp)
 {
   SDL_Surface *game, *toBlit = NULL;
   //SDL_Rect _board = {355, 20, 0, 0};
@@ -100,22 +100,22 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
       }
       switch (board->board_[j * 10 + i]) {
         case 1:
-          toBlit = load_image("bin/sprites/blue.bmp");
+          toBlit = sp[board->board_[j * 10 + i]];
           break;
         case 2:
-          toBlit = load_image("bin/sprites/green.bmp");
+          toBlit = sp[board->board_[j * 10 + i]];
           break;
         case 3:
-          toBlit = load_image("bin/sprites/pink.bmp");
+          toBlit = sp[board->board_[j * 10 + i]];
           break;
         case 4:
-          toBlit = load_image("bin/sprites/purple.bmp");
+          toBlit = sp[board->board_[j * 10 + i]];
           break;
         case 5:
-          toBlit = load_image("bin/sprites/yellow.bmp");
+          toBlit = sp[board->board_[j * 10 + i]];
           break;
         case 6:
-          toBlit = load_image("bin/sprites/red.bmp");
+          toBlit = sp[board->board_[j * 10 + i]];
           break;
         default:
           break;
@@ -129,15 +129,37 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
   return screen;
 }
 
-SDL_Surface* drawPiece(SDL_Surface *screen, piece* p)
+SDL_Surface* drawPiece(SDL_Surface *screen, piece* p, SDL_Surface **sp)
 {
+  SDL_Surface* toBlit = NULL;
+  SDL_Rect _board;
+  _board.x = 355 + 25 * p->x;
+  _board.y = 20 + 25 * p->y;
+  toBlit = sp[p->id];
+  shape* shape_ = p->shapes_[p->c_i];
+  for (size_t i = 0; i < shape_->h; i++)
+  {
+    _board.y = 20 + 25 * p->y;
+    for (size_t j = 0; j < shape_->w; j++)
+    {
+      //warnx(j * 10 + i);
+      if (shape_->form[j * (shape_->w) + i] == 0)
+      {
+        _board.y +=25;
+        continue;
+      }
+      SDL_BlitSurface(toBlit, NULL, screen, &_board);
+      _board.y += 25;
+    }
+    _board.x += 25;
+  }
 
 }
 
-SDL_Surface* displayBoard(SDL_Surface *screen, board *board)
+SDL_Surface* displayBoard(SDL_Surface *screen, board *board, SDL_Surface **sp)
 {
   SDL_Rect _board = {355, 20, 0, 0};
-  drawBoard(screen, _board, board);
+  drawBoard(screen, _board, board, sp);
   SDL_Flip(screen);
   return screen;
 }

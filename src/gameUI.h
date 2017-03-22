@@ -4,14 +4,11 @@
 # include "gui.h"
 # include "game.h"
 
-typedef struct sprites {
 
-  SDL_Surface** tab;
-
-} sprites;
+SDL_Surface** load_sprites();
 
 SDL_Surface* createWindow(SDL_Surface *screen);
 
-SDL_Surface* displayBoard(SDL_Surface *screen, board* board);
+SDL_Surface* displayBoard(SDL_Surface *screen, board* board, SDL_Surface **sp);
 
 # endif /* GAMEUI_H_ */
