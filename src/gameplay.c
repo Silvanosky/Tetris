@@ -79,11 +79,11 @@ void checkGravity(board* b, piece* p, int* currentScore)
 	if(sec > 1.5)
 	{
 		printf("BADDDD");
-		p->y -= 1;
+		p->y += 1;
 
 		if(!checkPosition(b, p))
 		{
-			printf("Fix position");
+			p->y -= 1;
 			fixPosition(b, p);
 
 			size_t nbLine = 0;
@@ -116,19 +116,18 @@ void play(SDL_Surface* screen)
 
 	while(proceed)
 	{
-		int dx = 0, dy = 0, dr = 0;
+		int dx = 0, dy = 1, dr = 0;
 
 		//handleInput(&proceed, &dx, &dy, &dr);
 
 		//printf("%d %d %d\n", dx, dy, dr);
 
-		//handleMovement(board, p, currentScore, dx, dy, dr);
-
+		//handleMovement(board, , currentScore, dx, dy, dr);
 		checkGravity(board, board->piece_, currentScore);
 
 		printf("%ld %ld\n", board->piece_->x, board->piece_->y);
 	
 		displayBoard(screen, board, sp);//TODO show piece
-        usleep(200);
+		sleep(1);
 	}
 }

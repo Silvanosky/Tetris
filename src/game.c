@@ -75,7 +75,7 @@ piece* init_piece(size_t id, size_t x)
 
 	p->shapes_ = getShape(id, &(p->n));
 	p->x = x;
-	p->y = p->shapes_[0]->h + 3;
+	p->y = p->shapes_[0]->h;
 	return p;
 }
 
@@ -86,12 +86,12 @@ int checkPosition(board *board_, piece *piece)
 	{
 		for (size_t x = 0; x < shape_->w; x++) 
 		{
-			if (piece->x + x >= board_->w || piece->x + x <= (size_t)-1)
+			if (piece->x + x >= board_->w || piece->x + x >= (size_t)-1)
 				return 0;
-			if (piece->y + y >= board_->h || piece->y + y <= (size_t)-1)
+			if (piece->y + y >= board_->h || piece->y + y >= (size_t)-1)
 				return 0;
 
-			if (shape_->form[y * shape_->w + x] 
+			if (shape_->form[y * shape_->w + x]
 				&& 
 				board_->board_[(y + piece->y) * board_->w + (x + piece->x)])
 				return 0;	
@@ -110,7 +110,7 @@ int fixPosition(board *board, piece *piece)
 			if (shape_->form[y * shape_->w + x])
 				board->board_[
 					(y + piece->y) * board->w + (x + piece->x)
-				] = piece->c_i + 1;	
+				] = piece->c_i;	
 		}
 	}
 
@@ -138,9 +138,9 @@ shape** getShape(size_t id, size_t* n)
 		data[i] = malloc(2 * sizeof(shape*));
 		int a[] = {1, 1, 1, 1};
 		data[i][j] = malloc(1 * sizeof (shape));
-		createShape(data[i][j++], 1, 4, a);
+		createShape(data[i][j++], 4, 1, a);
 		data[i][j] = malloc(1* sizeof (shape));
-		createShape(data[i++][j++], 4, 1, a);
+		createShape(data[i++][j++], 1, 4, a);
 	}
 	*n = 2;
 
