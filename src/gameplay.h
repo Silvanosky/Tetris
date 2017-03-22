@@ -2,6 +2,8 @@
 #define FILE_HEADER_GAMEPLAY
 
 #include <time.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "game.h"
 #include "gui.h"
 #include "gameUI.h"

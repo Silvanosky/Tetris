@@ -4,7 +4,11 @@ void handleInput(int* proceed, int* x, int* y, int* r)
 {
 	SDL_Event event;
 	// Take an event
-	SDL_WaitEvent(&event);
+    if(!SDL_PollEvent(&event))
+	{
+		return;
+	}
+		
 	// Switch on event type
 	switch (event.type)
 	{
@@ -81,7 +85,8 @@ void checkGravity(board* b, piece* p, int* currentScore)
 
 		if(!checkPosition(b, p))
 		{
-			//p->y -= 1;
+			p->y -= 1;
+			printf("Fix position");
 			fixPosition(b, p);
 
 			size_t nbLine = 0;
@@ -122,6 +127,8 @@ void play(SDL_Surface* screen)
 	
 		checkGravity(board, p, currentScore);
 
+		printf("%ld %ld/n", p->x, p->y);
+		
 		displayBoard(screen, board);//TODO show piece
 	}
 }
