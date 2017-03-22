@@ -6,13 +6,7 @@
 
 typedef struct sprites {
 
-  SDL_Surface* blue;
-  SDL_Surface* cyan;
-  SDL_Surface* green;
-  SDL_Surface* yellow;
-  SDL_Surface* pink;
-  SDL_Surface* red;
-  SDL_Surface* purple;
+  SDL_Surface** tab;
 
 } sprites;
 

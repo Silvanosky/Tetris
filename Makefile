@@ -3,7 +3,7 @@
 # Vars
 CC= gcc
 CPPFLAGS= -MMD `pkg-config --cflags sdl`
-CFLAGS= -Wall -Wextra -std=c99 -O2 
+CFLAGS= -Wall -Wextra -std=c99 -g 
 LDFLAGS=                           
 LDLIBS= `pkg-config --libs sdl` -export-dynamic -lSDL_ttf -lSDL_image -lm
 

@@ -5,13 +5,13 @@
 struct sprites* load_sprites()
 {
   struct sprites *sp = malloc(sizeof (struct sprites));
-  sp->blue = load_image("bin/sprites/blue.bmp");
-  sp->cyan = load_image("bin/sprites/cyan.bmp");
-  sp->green = load_image("bin/sprites/green.bmp");
-  sp->yellow = load_image("bin/sprites/yellow.bmp");
-  sp->pink = load_image("bin/sprites/pink.bmp");
-  sp->red = load_image("bin/sprites/red.bmp");
-  sp->purple = load_image("bin/sprites/purple.bmp");
+  sp->tab[0] = load_image("bin/sprites/blue.bmp");
+  sp->tab[1] = load_image("bin/sprites/cyan.bmp");
+  sp->tab[2] = load_image("bin/sprites/green.bmp");
+  sp->tab[3] = load_image("bin/sprites/yellow.bmp");
+  sp->tab[4] = load_image("bin/sprites/pink.bmp");
+  sp->tab[5] = load_image("bin/sprites/red.bmp");
+  sp->tab[6] = load_image("bin/sprites/purple.bmp");
   return sp;
 }
 
@@ -92,21 +92,33 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board)
     _board.y = 20;
     for (size_t j = 2; j < 22; j++)
     {
+      //warnx(j * 10 + i);
+      if (board->board_[j * 10 + i] == 0)
+      {
+        _board.y +=25;
+        continue;
+      }
       switch (board->board_[j * 10 + i]) {
-        case 0:
-          toBlit = load_image("bin/sprites/cyan.bmp");
         case 1:
           toBlit = load_image("bin/sprites/blue.bmp");
+          break;
         case 2:
           toBlit = load_image("bin/sprites/green.bmp");
+          break;
         case 3:
           toBlit = load_image("bin/sprites/pink.bmp");
+          break;
         case 4:
           toBlit = load_image("bin/sprites/purple.bmp");
+          break;
         case 5:
           toBlit = load_image("bin/sprites/yellow.bmp");
+          break;
         case 6:
           toBlit = load_image("bin/sprites/red.bmp");
+          break;
+        default:
+          break;
       }
       SDL_BlitSurface(toBlit, NULL, screen, &_board);
       _board.y += 25;

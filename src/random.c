@@ -37,7 +37,7 @@ int getRandom()
 	
 	if(index < 0 || index >= 70)
 	{
-		data = generateRandom(7, 70);
+		data = generateRandom(1, 70);
 		index = 0;		
 	}
 
