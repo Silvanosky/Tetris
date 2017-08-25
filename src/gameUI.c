@@ -125,7 +125,6 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board, SDL_
     }
     _board.x += 25;
   }
-  SDL_Flip(screen);
   return screen;
 }
 

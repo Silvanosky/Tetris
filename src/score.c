@@ -1,4 +1,3 @@
-#include "game.h"
 #include "score.h"
 
 void computeScore (int *currentScore, int nbLine, int level) {
@@ -84,14 +83,4 @@ tuple** loadScore () {
 	}
 	return result;
 }
-
-
-
-
-
-
-
-
-
-
 

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <err.h>
 #include <stdio.h>
+#include "game.h"
 
 void computeScore(int *currentScore, int nbline, int level);
 
@@ -21,5 +22,6 @@ typedef struct s_tuple tuple;
 void saveScore (tuple **scoreTab, char *name, int size, int score);
 
 tuple** loadScore();
+
 
 #endif 

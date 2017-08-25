@@ -4,39 +4,41 @@ void handleInput(int* proceed, int* x, int* y, int* r)
 {
 	SDL_Event event;
 	// Take an event
-	//SDL_WaitEventTimeout(&event, 50);	
-	// Switch on event type
-	switch (event.type)
+	while (SDL_PollEvent( &event ) != 0 )
 	{
-	  	// Someone pressed a key -> leave the function
-	  	case SDL_QUIT: /* Quit */
-			*proceed = 0;
-			break;
-	  	case SDL_KEYDOWN: /* Si appui sur une touche */
-			switch (event.key.keysym.sym)
-			{
-			  	case SDLK_SPACE: // key_space : launch the recognition
-					*r += 1;
-					break;
-				case SDLK_UP:
-					//TODO down bottom
-					break;
-				case SDLK_DOWN:
-					*y += 1;
-					break;
-				case SDLK_RIGHT:
-					*x += 1;
-					break;
-				case SDLK_LEFT:
-					*x -= 1;
-					break;
-			  	case SDLK_ESCAPE:
-			  		*proceed = 0;
-			  		break;
-			  	default: break;
-			}
-			break;
-	  	default: break;
+		// Switch on event type
+		switch (event.type)
+		{
+	  		// Someone pressed a key -> leave the function
+	  		case SDL_QUIT: /* Quit */
+				*proceed = 0;
+				break;
+	  		case SDL_KEYDOWN: /* Si appui sur une touche */
+				switch (event.key.keysym.sym)
+				{
+			  		case SDLK_SPACE: // key_space : launch the recognition
+						*r += 1;
+						break;
+					case SDLK_UP:
+						//TODO down bottom
+						break;
+					case SDLK_DOWN:
+						*y += 1;
+						break;
+					case SDLK_RIGHT:
+						*x += 1;
+						break;
+					case SDLK_LEFT:
+						*x -= 1;
+						break;
+				  	case SDLK_ESCAPE:
+				  		*proceed = 0;
+				  		break;
+				  	default: break;
+				}
+				break;
+		  	default: break;
+		}
 	}
 }
 
@@ -45,7 +47,7 @@ void handleMovement(board* board, piece* p, int* currentScore,
 {
 	if (dy == 1)
 		softDrop(currentScore);
-	else
+	else if(dy > 1)
 		hardDrop(currentScore, dy);
 
 	p->c_i += dr;
@@ -70,15 +72,15 @@ void checkGravity(board* b, piece* p, int* currentScore)
 {
 	static time_t lastTime = -1;
 	if(lastTime == -1)
-		lastTime = time(NULL);
+		time(&lastTime);
 
 	shape* shape = p->shapes_[p->c_i];
 
 	double sec = difftime(time(NULL), lastTime);
-	printf("%lf", sec);
-	if(sec > 1.5)
+	//printf("%lf \n", sec);
+	if(sec >= 2)
 	{
-		printf("BADDDD");
+		//printf("BADDDD");
 		p->y += 1;
 
 		if(!checkPosition(b, p))
@@ -99,7 +101,7 @@ void checkGravity(board* b, piece* p, int* currentScore)
 			free(p);
 			b->piece_ = init_piece(getRandom(), 1);
 		}
-		lastTime = time(NULL);
+		time(&lastTime);
 	}
 }
 
@@ -116,18 +118,20 @@ void play(SDL_Surface* screen)
 
 	while(proceed)
 	{
-		int dx = 0, dy = 1, dr = 0;
+		int dx = 0, dy = 0, dr = 0;
 
-		//handleInput(&proceed, &dx, &dy, &dr);
+		handleInput(&proceed, &dx, &dy, &dr);
 
 		//printf("%d %d %d\n", dx, dy, dr);
 
-		//handleMovement(board, , currentScore, dx, dy, dr);
+		handleMovement(board, board->piece_, currentScore, dx, dy, dr);
+		
 		checkGravity(board, board->piece_, currentScore);
 
-		printf("%ld %ld\n", board->piece_->x, board->piece_->y);
+		//printf("%ld %ld\n", board->piece_->x, board->piece_->y);
 	
 		displayBoard(screen, board, sp);//TODO show piece
-		sleep(1);
+
+		usleep(200);
 	}
 }
