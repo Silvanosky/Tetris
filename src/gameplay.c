@@ -107,7 +107,7 @@ void checkGravity(board* b, piece* p, int* currentScore)
 
 void play(SDL_Surface* screen)
 {
-	board* board = init_board(22, 10, 0);
+	board* board = init_board(20, 10, 0);
 	board->piece_ = init_piece(getRandom(), 1);//TODO dynamic x
 	int *currentScore = malloc(sizeof (int));
 	*currentScore = 0;

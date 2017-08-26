@@ -10,7 +10,7 @@ board* init_board(size_t h, size_t w, size_t lvl)
 	board_->score = 0;
 	board_->board_ = malloc(h * w * sizeof(int));
 	for(size_t i = 0; i < h*w; i++)
-		board_->board_[i] = 0;
+		board_->board_[i] = -1;
 
 	board_->piece_ = NULL;
 
@@ -69,13 +69,13 @@ void removeLine(board* board, size_t ly)
 piece* init_piece(size_t id, size_t x)
 {
 	piece* p = malloc(1 * sizeof(piece));
-
 	p->id = id;
 	p->c_i = 0;
 
 	p->shapes_ = getShape(id, &(p->n));
 	p->x = x;
-	p->y = p->shapes_[0]->h;
+	//p->y = p->shapes_[0]->h;
+	p->y = 0;
 	return p;
 }
 
@@ -87,16 +87,28 @@ int checkPosition(board *board_, piece *piece)
 		for (size_t x = 0; x < shape_->w; x++) 
 		{
 			if (piece->x + x >= board_->w || piece->x + x >= (size_t)-1)
+			{
+				printf("ou pas large\n");
 				return 0;
+			}
 			if (piece->y + y >= board_->h || piece->y + y >= (size_t)-1)
+			{
+			
+				printf("ou pas haut %ld\n", piece->y);
 				return 0;
 
+			}
 			if (shape_->form[y * shape_->w + x]
 				&& 
-				board_->board_[(y + piece->y) * board_->w + (x + piece->x)])
-				return 0;	
+				board_->board_[(y + piece->y) * board_->w + (x + piece->x)] != -1)
+			{
+				printf("au dessus d'un autre\n");
+				return 0;
+			}	
 		}
 	}
+
+	printf("ALL OK LEL\n");
 	return 1;
 }
 
@@ -110,7 +122,7 @@ int fixPosition(board *board, piece *piece)
 			if (shape_->form[y * shape_->w + x])
 				board->board_[
 					(y + piece->y) * board->w + (x + piece->x)
-				] = piece->c_i;	
+				] = piece->id;	
 		}
 	}
 
