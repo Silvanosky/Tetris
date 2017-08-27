@@ -22,6 +22,7 @@ SDL_Surface* drawScore(SDL_Surface *screen, int score)
 	SDL_Rect _text = {35, 35, 0, 0};
 	toBlit =  SDL_CreateRGBSurface(0, 200, 210, 32, 0, 0, 0, 0);
 	SDL_BlitSurface(toBlit, NULL, screen, &_score);
+	SDL_FreeSurface(toBlit); 
 
 	TTF_Font *font = NULL;
 	SDL_Color white_color = {255, 255, 255, 0};
@@ -32,14 +33,17 @@ SDL_Surface* drawScore(SDL_Surface *screen, int score)
 
 	toBlit = TTF_RenderText_Blended(font, buffer, white_color);
 	SDL_BlitSurface(toBlit, NULL, screen, &_text);
+	SDL_FreeSurface(toBlit);
 	_text.y += 60;
 
 	sprintf(buffer, "Niveau : 0");
 	toBlit = TTF_RenderText_Blended(font, buffer, white_color);
 	SDL_BlitSurface(toBlit, NULL, screen, &_text);
+	SDL_FreeSurface(toBlit);
 	_text.y += 60;
 	toBlit = TTF_RenderText_Blended(font, "Ligne(s) : 0", white_color);
 	SDL_BlitSurface(toBlit, NULL, screen, &_text);
+	SDL_FreeSurface(toBlit);
 	SDL_Flip(screen);
 	return screen;
 }
@@ -54,6 +58,7 @@ SDL_Surface* createWindow(SDL_Surface *screen)
 	SDL_Rect _text = {35, 35, 0, 0};
 	toBlit = load_image("bin/sprites/game_background.bmp");
 	SDL_BlitSurface(toBlit, NULL, screen, &_back);
+	SDL_FreeSurface(toBlit);
 	//board =  SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
 	//SDL_FillRect(board, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 	//SDL_BlitSurface(board, NULL, screen, &_board);
@@ -61,6 +66,7 @@ SDL_Surface* createWindow(SDL_Surface *screen)
 	//SDL_BlitSurface(toBlit, NULL, screen, &_score);
 	toBlit =  SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0);
 	SDL_BlitSurface(toBlit, NULL, screen, &_next);
+	SDL_FreeSurface(toBlit);
 	//Text
 	TTF_Font *font = NULL;
 	SDL_Color white_color = {255, 255, 255, 0};
@@ -78,6 +84,7 @@ SDL_Surface* createWindow(SDL_Surface *screen)
 	_next.y += 105;
 	_next.x += 17;
 	SDL_BlitSurface(toBlit, NULL, screen, &_next);
+	SDL_FreeSurface(toBlit);
 	SDL_Flip(screen);
 	screen = drawScore(screen, 50);
 	return screen;
@@ -92,6 +99,7 @@ SDL_Surface* drawBoard(SDL_Surface *screen, SDL_Rect _board,  board *board, SDL_
 	game =  SDL_CreateRGBSurface(0, 250, 500, 32, 0, 0, 0, 0);
 	SDL_FillRect(game, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 	SDL_BlitSurface(game, NULL, screen, &_board);
+	SDL_FreeSurface(game);
 	for (size_t i = 0; i < board->w; i++)
 	{
 		_board.y = 20;

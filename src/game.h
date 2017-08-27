@@ -2,6 +2,7 @@
 #define FILE_HEADER_GAME
 
 #include <stdlib.h>
+#include <err.h>
 
 typedef struct shape {
 

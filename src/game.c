@@ -88,13 +88,11 @@ int checkPosition(board *board_, piece *piece)
 		{
 			if (piece->x + x >= board_->w || piece->x + x >= (size_t)-1)
 			{
-				printf("ou pas large\n");
 				return 0;
 			}
 			if (piece->y + y >= board_->h || piece->y + y >= (size_t)-1)
 			{
 			
-				printf("ou pas haut %ld\n", piece->y);
 				return 0;
 
 			}
@@ -102,13 +100,11 @@ int checkPosition(board *board_, piece *piece)
 				&& 
 				board_->board_[(y + piece->y) * board_->w + (x + piece->x)] != -1)
 			{
-				printf("au dessus d'un autre\n");
 				return 0;
-			}	
+			}
 		}
 	}
 
-	printf("ALL OK LEL\n");
 	return 1;
 }
 

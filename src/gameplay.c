@@ -51,10 +51,15 @@ void handleMovement(board* board, piece* p, int* currentScore,
 		hardDrop(currentScore, dy);
 
 	p->c_i += dr;
+	if(p->c_i >= p->n)
+		p->c_i = 0;
 	if(!checkPosition(board, p))
 	{
 		p->c_i -= dr;
-		return;//Can't rotate so return;
+		if(p->c_i >= (size_t)-1)
+			p->c_i = p->n - 1;
+		warnx("position %ld\n", p->c_i);
+	//	return;//Can't rotate so return;
 	}
 
 	p->x += dx;
